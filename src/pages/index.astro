@@ -496,134 +496,7 @@ const geminiApiUrl = import.meta.env.PUBLIC_GEMINI_API_URL;
         #general-cv-modal .modal-content { max-width: 600px; }
 
 
-        /* Chat Widget */
-        #chat-widget {
-            position: fixed;
-            bottom: var(--spacing-lg);
-            left: var(--spacing-lg); /* RTL: left for LTR-like positioning of chat */
-            z-index: 1020;
-        }
-        #chat-toggle-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 1.8rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulseSupportBtn 2s infinite;
-        }
-        #chat-window {
-            display: none;
-            position: fixed; /* Changed from absolute to fixed */
-            bottom: calc(var(--spacing-lg) + 70px); /* Position above toggle button */
-            left: var(--spacing-lg); /* Match toggle button positioning */
-            width: 350px;
-            height: 450px;
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-        #chat-window.active {
-            display: flex;
-        }
-        .chat-header {
-            background: linear-gradient(90deg, var(--primary-color) 80%, var(--accent-color) 100%);
-            color: white;
-            padding: var(--spacing-md);
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #fff2;
-        }
-        .chat-header .close-chat-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        .chat-messages {
-            flex-grow: 1;
-            padding: var(--spacing-md);
-            overflow-y: auto;
-            background-color: var(--light-bg);
-        }
-        .chat-message {
-            margin-bottom: var(--spacing-md);
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: var(--border-radius);
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-        .chat-message.user {
-            background: linear-gradient(90deg, var(--primary-color) 80%, var(--accent-color) 100%);
-            color: #fff;
-            margin-left: auto;
-            text-align: left;
-            border-bottom-right-radius: 0;
-            box-shadow: 0 2px 8px rgba(52,152,219,0.10);
-            animation: fadeInUp 0.5s;
-        }
-        .chat-message.bot {
-            background: linear-gradient(90deg, #e9ecef 80%, #f8f9fa 100%);
-            color: var(--text-color);
-            margin-right: auto;
-            text-align: right;
-            border-bottom-left-radius: 0;
-            box-shadow: 0 2px 8px rgba(44,62,80,0.07);
-            animation: fadeInUp 0.5s;
-        }
-        .chat-message .timestamp {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            display: block;
-            margin-top: var(--spacing-xs);
-        }
-        .chat-input-area {
-            display: flex;
-            padding: var(--spacing-md);
-            border-top: 1px solid var(--border-color);
-        }
-        .chat-input-area input[type="text"] {
-            flex-grow: 1;
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius) 0 0 var(--border-radius); /* RTL adjust for button */
-            padding: var(--spacing-sm);
-            margin-left: -1px; /* Overlap borders */
-        }
-        .chat-input-area button {
-            padding: var(--spacing-sm) var(--spacing-md);
-            border: 1px solid var(--primary-color);
-            background-color: var(--primary-color);
-            color: white;
-            cursor: pointer;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0; /* RTL */
-        }
-        .chat-input-area button#voice-input-btn {
-             border-radius: 0;
-             margin-left: var(--spacing-xs);
-        }
-        .loading-dots span {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--primary-color);
-            animation: bounce 1.4s infinite ease-in-out both;
-            margin: 0 2px;
-        }
-        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
-        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        
 
 
         /* Animations */
@@ -772,7 +645,7 @@ const geminiApiUrl = import.meta.env.PUBLIC_GEMINI_API_URL;
             <div class="container">
                 <h1>اكتشف مستقبلك المهني مع {companyName}</h1>
                 <p>نحن نؤمن بأن موظفينا هم أعظم أصولنا. انضم إلى فريق مبتكر وملهم يسعى لإحداث فرق في مجال الرعاية الصحية.</p>
-                <a href="#jobs" class="btn btn-primary btn-lg" style="font-size:1.2rem;padding:1rem 2.5rem;box-shadow:0 4px 16px rgba(52,152,219,0.18);">استكشف فرص العمل</a>
+                <a href="jobs.html" class="btn btn-primary btn-lg" style="font-size:1.2rem;padding:1rem 2.5rem;box-shadow:0 4px 16px rgba(52,152,219,0.18);">استكشف فرص العمل</a>
             </div>
         </section>
 
@@ -1009,25 +882,7 @@ const geminiApiUrl = import.meta.env.PUBLIC_GEMINI_API_URL;
     </div>
 
 
-    {/* Chat Widget */}
-    <div id="chat-widget">
-        <button id="chat-toggle-btn" aria-label="فتح الدردشة" aria-expanded="false">💬</button>
-        <div id="chat-window" role="log" aria-live="polite">
-            <div class="chat-header">
-                <span>مساعد {companyName} الذكي</span>
-                <button class="close-chat-btn" aria-label="إغلاق الدردشة">×</button>
-            </div>
-            <div id="chat-messages" class="chat-messages">
-                {/* Messages will appear here */}
-                 <div class="chat-message bot">مرحباً! كيف يمكنني مساعدتك اليوم؟</div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="اكتب رسالتك هنا..." aria-label="أدخل رسالتك للدردشة">
-                <button id="send-chat-btn" aria-label="إرسال الرسالة">إرسال</button>
-                <button id="voice-input-btn" aria-label="إدخال صوتي">🎤</button>
-            </div>
-        </div>
-    </div>
+    
 
 <script>
 // TypeScript: Declare interfaces for Speech Recognition
@@ -1702,5 +1557,132 @@ if(signupBtnHeader) signupBtnHeader.addEventListener('click', () => { window.loc
 
 });
 </script>
+    <!-- Floating Support Button and Popup -->
+    <style>
+      #support-float-btn {
+        position: fixed;
+        bottom: 28px;
+        left: 28px;
+        z-index: 1200;
+        width: 62px;
+        height: 62px;
+        background: linear-gradient(135deg, #3498db 60%, #764ba2 100%);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        box-shadow: 0 6px 24px rgba(52,152,219,0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.2rem;
+        cursor: pointer;
+        transition: box-shadow 0.2s, transform 0.2s;
+        animation: pulseSupportBtn 2s infinite;
+      }
+      #support-float-btn:hover {
+        box-shadow: 0 10px 32px rgba(52,152,219,0.28);
+        transform: scale(1.07);
+      }
+      #support-popup-modal {
+        display: none;
+        position: fixed;
+        z-index: 1300;
+        left: 0; top: 0; width: 100vw; height: 100vh;
+        background: rgba(0,0,0,0.45);
+        align-items: center;
+        justify-content: center;
+      }
+      #support-popup-modal.active {
+        display: flex;
+      }
+      #support-popup-content {
+        background: none;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        border-radius: 0;
+        width: 410px;
+        max-width: 95vw;
+        height: 640px;
+        max-height: 95vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #support-popup-content iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 22px;
+        background: #fff;
+        box-shadow: 0 8px 32px rgba(52,152,219,0.18);
+      }
+      #support-popup-close {
+        position: absolute;
+        top: -18px;
+        left: -18px;
+        background: #fff;
+        color: #764ba2;
+        border: none;
+        border-radius: 50%;
+        width: 38px;
+        height: 38px;
+        font-size: 1.7rem;
+        box-shadow: 0 2px 8px rgba(52,152,219,0.12);
+        cursor: pointer;
+        z-index: 2;
+        transition: background 0.2s;
+      }
+      #support-popup-close:hover {
+        background: #f0f0f0;
+      }
+      @media (max-width: 600px) {
+        #support-popup-content {
+          width: 98vw;
+          height: 85vh;
+        }
+      }
+    </style>
+    <button id="support-float-btn" aria-label="الدعم الفني" title="الدعم الفني">
+      💬
+    </button>
+    <div id="support-popup-modal" role="dialog" aria-modal="true" aria-label="الدعم الفني">
+      <div id="support-popup-content">
+        <button id="support-popup-close" aria-label="إغلاق الدعم">×</button>
+        <iframe src="supportAI.html" title="الدعم الفني"></iframe>
+      </div>
+    </div>
+    <script>
+      const supportBtn = document.getElementById('support-float-btn');
+      const supportModal = document.getElementById('support-popup-modal');
+      const supportClose = document.getElementById('support-popup-close');
+      if (supportBtn && supportModal && supportClose) {
+        // Open popup
+        supportBtn.addEventListener('click', () => {
+          supportModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+        // Close popup
+        supportClose.addEventListener('click', () => {
+          supportModal.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+        // Close on outside click
+        supportModal.addEventListener('click', (e) => {
+          if (e.target === supportModal) {
+            supportModal.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        });
+        // Close on ESC
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && supportModal.classList.contains('active')) {
+            supportModal.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+    </script>
 </body>
 </html>
