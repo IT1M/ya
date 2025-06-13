@@ -4,12 +4,18 @@
 // We are building a static page with client-side JavaScript.
 const pageTitle = "ميس للمنتجات الطبية - وظائف";
 const companyName = "ميس للمنتجات الطبية";
+const geminiApiKey = import.meta.env.PUBLIC_GEMINI_API_KEY;
+const geminiApiUrl = import.meta.env.PUBLIC_GEMINI_API_URL;
 ---
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <script>
+      window.GEMINI_API_KEY = "{geminiApiKey}";
+      window.GEMINI_API_URL = "{geminiApiUrl}";
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{pageTitle}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> {/* Placeholder favicon */}
@@ -108,8 +114,15 @@ const companyName = "ميس للمنتجات الطبية";
             cursor: pointer;
             border: 1px solid transparent;
             border-radius: var(--border-radius);
-            transition: all var(--transition-speed) ease;
+            transition: all var(--transition-speed) cubic-bezier(.4,2,.6,1);
             white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(52,152,219,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:active {
+            transform: scale(0.97);
+            filter: brightness(0.97);
         }
 
         .btn-primary {
@@ -279,10 +292,21 @@ const companyName = "ميس للمنتجات الطبية";
             box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.075);
             text-align: center;
         }
-        .culture-item .icon { /* Placeholder for actual icons */
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: var(--spacing-md);
+        .culture-item .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto var(--spacing-md) auto;
+            background: linear-gradient(135deg, var(--primary-color) 60%, var(--accent-color) 100%);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+        }
+        .culture-item .icon svg {
+            width: 32px;
+            height: 32px;
+            color: #fff;
         }
         .culture-item h3 {
             font-size: 1.25rem;
@@ -314,15 +338,30 @@ const companyName = "ميس للمنتجات الطبية";
             gap: var(--spacing-lg);
         }
         .job-card {
-            background-color: #fff;
+            background: linear-gradient(120deg, #fff 80%, #f0f7fa 100%);
             padding: var(--spacing-lg);
-            border: 1px solid var(--border-color);
+            border: 1.5px solid var(--primary-color);
             border-radius: var(--border-radius);
-            box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);
-            transition: box-shadow var(--transition-speed) ease;
+            box-shadow: 0 2px 16px rgba(52,152,219,0.07);
+            transition: box-shadow var(--transition-speed) cubic-bezier(.4,2,.6,1), transform var(--transition-speed);
+            position: relative;
+            overflow: hidden;
+        }
+        .job-card::before {
+            content: "";
+            position: absolute;
+            top: -40px;
+            left: -40px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+            opacity: 0.08;
+            z-index: 0;
         }
         .job-card:hover {
-            box-shadow: var(--box-shadow);
+            box-shadow: 0 8px 32px rgba(52,152,219,0.18);
+            transform: translateY(-4px) scale(1.02);
+            border-color: var(--accent-color);
         }
         .job-card h3 {
             font-size: 1.3rem;
@@ -497,13 +536,14 @@ const companyName = "ميس للمنتجات الطبية";
             display: flex;
         }
         .chat-header {
-            background-color: var(--primary-color);
+            background: linear-gradient(90deg, var(--primary-color) 80%, var(--accent-color) 100%);
             color: white;
             padding: var(--spacing-md);
             font-weight: bold;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 2px solid #fff2;
         }
         .chat-header .close-chat-btn {
             background: none;
@@ -526,16 +566,22 @@ const companyName = "ميس للمنتجات الطبية";
             word-wrap: break-word;
         }
         .chat-message.user {
-            background-color: var(--primary-color);
-            color: white;
-            margin-left: auto; /* RTL: user messages on the left */
+            background: linear-gradient(90deg, var(--primary-color) 80%, var(--accent-color) 100%);
+            color: #fff;
+            margin-left: auto;
             text-align: left;
+            border-bottom-right-radius: 0;
+            box-shadow: 0 2px 8px rgba(52,152,219,0.10);
+            animation: fadeInUp 0.5s;
         }
         .chat-message.bot {
-            background-color: #e9ecef;
+            background: linear-gradient(90deg, #e9ecef 80%, #f8f9fa 100%);
             color: var(--text-color);
-            margin-right: auto; /* RTL: bot messages on the right */
+            margin-right: auto;
             text-align: right;
+            border-bottom-left-radius: 0;
+            box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+            animation: fadeInUp 0.5s;
         }
         .chat-message .timestamp {
             font-size: 0.75rem;
@@ -710,7 +756,7 @@ const companyName = "ميس للمنتجات الطبية";
                 <ul class="nav-links">
                     <li><a href="#hero">الرئيسية</a></li>
                     <li><a href="#culture">ثقافة العمل</a></li>
-                    <li><a href="#jobs">الوظائف</a></li>
+                    <li><a href="jobs.html">الوظائف</a></li>
                     <li><a href="#contact">تواصل معنا</a></li>
                 </ul>
             </nav>
@@ -726,7 +772,7 @@ const companyName = "ميس للمنتجات الطبية";
             <div class="container">
                 <h1>اكتشف مستقبلك المهني مع {companyName}</h1>
                 <p>نحن نؤمن بأن موظفينا هم أعظم أصولنا. انضم إلى فريق مبتكر وملهم يسعى لإحداث فرق في مجال الرعاية الصحية.</p>
-                <a href="#jobs" class="btn btn-primary btn-lg">استكشف فرص العمل</a>
+                <a href="#jobs" class="btn btn-primary btn-lg" style="font-size:1.2rem;padding:1rem 2.5rem;box-shadow:0 4px 16px rgba(52,152,219,0.18);">استكشف فرص العمل</a>
             </div>
         </section>
 
@@ -735,25 +781,33 @@ const companyName = "ميس للمنتجات الطبية";
                 <h2>ثقافتنا في {companyName}</h2>
                 <div class="culture-grid">
                     <div class="culture-item">
-                        <div class="icon" aria-hidden="true">💖</div> {/* Placeholder icon */}
-                        <h3>الرعاية</h3>
-                        <p>نهتم بمرضانا وموظفينا ومجتمعنا، ونسعى لتقديم أفضل مستويات الرعاية.</p>
+                    <div class="icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.35-7-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.65-7 10-7 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <div class="culture-item">
-                        <div class="icon" aria-hidden="true">💡</div> {/* Placeholder icon */}
-                        <h3>الابتكار</h3>
-                        <p>نشجع التفكير الإبداعي ونتبنى أحدث التقنيات لتطوير حلول طبية متقدمة.</p>
+                    <h3>الرعاية</h3>
+                    <p>نهتم بمرضانا وموظفينا ومجتمعنا، ونسعى لتقديم أفضل مستويات الرعاية.</p>
+                </div>
+                <div class="culture-item">
+                    <div class="icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.07-7.07-1.41 1.41M6.34 17.66l-1.41 1.41m12.02 0 1.41-1.41M6.34 6.34 4.93 4.93" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/></svg>
                     </div>
-                    <div class="culture-item">
-                        <div class="icon" aria-hidden="true">🤝</div> {/* Placeholder icon */}
-                        <h3>التعاون</h3>
-                        <p>نعمل بروح الفريق الواحد، ونؤمن بأن التعاون هو مفتاح النجاح المشترك.</p>
+                    <h3>الابتكار</h3>
+                    <p>نشجع التفكير الإبداعي ونتبنى أحدث التقنيات لتطوير حلول طبية متقدمة.</p>
+                </div>
+                <div class="culture-item">
+                    <div class="icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M17 11V7a5 5 0 0 0-10 0v4M2 15v2a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 15v-2a5 5 0 0 1 10 0v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
-                    <div class="culture-item">
-                        <div class="icon" aria-hidden="true">🌟</div> {/* Placeholder icon */}
-                        <h3>التميز</h3>
-                        <p>نسعى جاهدين لتحقيق أعلى معايير الجودة والتميز في كل ما نقوم به.</p>
+                    <h3>التعاون</h3>
+                    <p>نعمل بروح الفريق الواحد، ونؤمن بأن التعاون هو مفتاح النجاح المشترك.</p>
+                </div>
+                <div class="culture-item">
+                    <div class="icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </div>
+                    <h3>التميز</h3>
+                    <p>نسعى جاهدين لتحقيق أعلى معايير الجودة والتميز في كل ما نقوم به.</p>
+                </div>
                 </div>
             </div>
         </section>
@@ -779,7 +833,10 @@ const companyName = "ميس للمنتجات الطبية";
                 </div>
                 <div id="job-listings" class="job-listings">
                     {/* Job cards will be populated by JS */}
-                    <p class="no-jobs-message">جاري تحميل الوظائف...</p>
+                    <div class="no-jobs-message" id="jobs-loading-message">
+                        <svg width="32" height="32" viewBox="0 0 50 50" style="vertical-align:middle;"><circle cx="25" cy="25" r="20" fill="none" stroke="#3498db" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/></circle></svg>
+                        <span style="margin-right:10px;">جاري تحميل الوظائف...</span>
+                    </div>
                 </div>
                 <div class="general-cv-submission">
                     <p>لم تجد الوظيفة المناسبة؟</p>
@@ -802,7 +859,10 @@ const companyName = "ميس للمنتجات الطبية";
 
     <footer id="main-footer">
         <div class="container">
-            <p>© {new Date().getFullYear()} {companyName}. جميع الحقوق محفوظة.</p>
+            <p>
+                <svg width="18" height="18" style="vertical-align:middle;margin-left:4px;" fill="none" viewBox="0 0 24 24"><path d="M12 21s-7-4.35-7-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.65-7 10-7 10Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                © {new Date().getFullYear()} {companyName}. جميع الحقوق محفوظة.
+            </p>
         </div>
     </footer>
 
@@ -970,21 +1030,44 @@ const companyName = "ميس للمنتجات الطبية";
     </div>
 
 <script>
-// TypeScript: Extend window for SpeechRecognition types
+// TypeScript: Declare interfaces for Speech Recognition
+interface SpeechRecognition extends EventTarget {
+    continuous: boolean;
+    interimResults: boolean;
+    lang: string;
+    maxAlternatives: number;
+    start(): void;
+    stop(): void;
+    onresult: ((this: SpeechRecognition, ev: SpeechRecognitionEvent) => any) | null;
+    onerror: ((this: SpeechRecognition, ev: SpeechRecognitionErrorEvent) => any) | null;
+    onspeechend: ((this: SpeechRecognition, ev: Event) => any) | null;
+}
+
+interface SpeechRecognitionConstructor {
+    new (): SpeechRecognition;
+}
+
 declare global {
     interface Window {
-        SpeechRecognition: typeof SpeechRecognition | undefined;
-        webkitSpeechRecognition: typeof SpeechRecognition | undefined;
+        SpeechRecognition: SpeechRecognitionConstructor | undefined;
+        webkitSpeechRecognition: SpeechRecognitionConstructor | undefined;
     }
 }
-// Dummy SpeechRecognition type for TS (browser will provide at runtime)
-type SpeechRecognition = any;
+
 type SpeechRecognitionEvent = any;
 type SpeechRecognitionErrorEvent = any;
 
+// Fix: Extend Window interface for Gemini API vars
+declare global {
+  interface Window {
+    GEMINI_API_KEY?: string;
+    GEMINI_API_URL?: string;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const appState = {
-        currentUser: null, // { name: 'John Doe', email: 'john@example.com' }
+        currentUser: null as { name: string; email: string } | null,
         jobs: [
             // Mock data - In a real app, this would come from an API
             { id: 1, title: 'مندوب مبيعات طبية', department: 'المبيعات', location: 'الرياض', type: 'دوام كامل', description: 'مسؤول عن ترويج وبيع المنتجات الطبية للعملاء في منطقة الرياض. خبرة لا تقل عن سنتين.', responsibilities: ['تحقيق الأهداف البيعية الشهرية', 'بناء علاقات قوية مع العملاء', 'تقديم تقارير دورية عن النشاط البيعي'], qualifications: ['شهادة جامعية في التسويق أو مجال طبي ذو صلة', 'مهارات تواصل وتفاوض ممتازة', 'رخصة قيادة سارية'] },
@@ -993,9 +1076,13 @@ document.addEventListener('DOMContentLoaded', () => {
             { id: 4, title: 'مدير منتجات', department: 'إدارة المنتجات', location: 'الدمام', type: 'دوام كامل', description: 'مسؤول عن دورة حياة المنتج من التخطيط إلى الإطلاق. يتطلب فهماً عميقاً للسوق الطبي.', responsibilities: ['تحديد متطلبات المنتج بناءً على أبحاث السوق', 'التعاون مع فرق الهندسة والتسويق', 'متابعة أداء المنتج بعد الإطلاق'], qualifications: ['خبرة 5 سنوات كمدير منتجات، يفضل في القطاع الطبي', 'مهارات تحليلية قوية', 'قدرة على قيادة الفرق وتحفيزها'] },
             { id: 5, title: 'مساعد إداري', department: 'الإدارة', location: 'الرياض', type: 'دوام جزئي', description: 'تقديم الدعم الإداري والمكتبي لمختلف أقسام الشركة.', responsibilities: ['تنظيم المواعيد والاجتماعات', 'إعداد المراسلات والتقارير', 'التعامل مع المكالمات الهاتفية والبريد الإلكتروني'], qualifications: ['دبلوم في إدارة المكاتب أو سكرتاريا', 'إجادة استخدام برامج Microsoft Office', 'مهارات تنظيمية ممتازة'] }
         ],
-        applications: [], // { jobId, name, email, phone, cv, coverLetter } or { name, email, phone, field, cv } for general
+        applications: [] as Array<
+            | { jobId: string; name: string; email: string; phone: string; cv: string | null; coverLetter: string; type: string }
+            | { name: string; email: string; phone: string; field: string; cv: string | null; type: string }
+        >,
         chatHistory: [{ type: 'bot', text: 'مرحباً! كيف يمكنني مساعدتك اليوم؟', timestamp: new Date() }],
-        geminiApiKey: 'YOUR_GEMINI_API_KEY_PLACEHOLDER' // Replace with your actual key
+        geminiApiKey: window.GEMINI_API_KEY || '', // Injected from Astro env
+        geminiApiUrl: window.GEMINI_API_URL || '', // Injected from Astro env
     };
 
     // Load state from localStorage if available
@@ -1140,23 +1227,29 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Smooth scroll for nav links & close mobile menu on click
     document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+        anchor.addEventListener('click', function (e: Event) {
             e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
+            const target = e.currentTarget as HTMLAnchorElement;
+            const targetId = target.getAttribute('href');
+            if (targetId) {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
             }
-            if (navLinks.classList.contains('active')) { // Close mobile nav
+            if (navLinks && navLinks.classList.contains('active')) { // Close mobile nav
                  navLinks.classList.remove('active');
-                 mobileNavToggle.setAttribute('aria-expanded', 'false');
-                 mobileNavToggle.innerHTML = '☰';
+                 if (mobileNavToggle) {
+                     mobileNavToggle.setAttribute('aria-expanded', 'false');
+                     mobileNavToggle.innerHTML = '☰';
+                 }
             }
         });
     });
 
     // Header scroll effect
     window.addEventListener('scroll', () => {
+        if (!mainHeader) return;
         if (window.scrollY > 50) {
             mainHeader.classList.add('scrolled');
         } else {
@@ -1165,8 +1258,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Authentication ---
-    if(loginBtnHeader) loginBtnHeader.addEventListener('click', () => openModal(loginModal));
-    if(signupBtnHeader) signupBtnHeader.addEventListener('click', () => openModal(signupModal));
+if(loginBtnHeader) loginBtnHeader.addEventListener('click', () => { window.location.href = 'login.html'; });
+if(signupBtnHeader) signupBtnHeader.addEventListener('click', () => { window.location.href = 'signup.html'; });
 
     if(loginForm) {
         loginForm.addEventListener('submit', (e: Event) => {
@@ -1241,13 +1334,14 @@ document.addEventListener('DOMContentLoaded', () => {
         jobListingsContainer.innerHTML = '';
 
         if (jobsToRender.length === 0) {
-            jobListingsContainer.innerHTML = '<p class="no-jobs-message">لا توجد وظائف تطابق معايير البحث حالياً.</p>';
+            jobListingsContainer.innerHTML = '<div class="no-jobs-message"><svg width="28" height="28" style="vertical-align:middle;margin-left:8px;" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#e74c3c" stroke-width="2"/><path d="M9 9l6 6M15 9l-6 6" stroke="#e74c3c" stroke-width="2" stroke-linecap="round"/></svg>لا توجد وظائف تطابق معايير البحث حالياً.</div>';
             return;
         }
 
-        jobsToRender.forEach(job => {
+        jobsToRender.forEach((job, idx) => {
             const jobCard = document.createElement('div');
             jobCard.className = 'job-card';
+            jobCard.style.animation = `fadeInUp 0.6s ${idx * 0.08}s both`;
             jobCard.innerHTML = `
                 <h3>${job.title}</h3>
                 <p class="details">
@@ -1266,10 +1360,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add event listeners for new buttons
         document.querySelectorAll('.view-details-btn').forEach(button => {
-            button.addEventListener('click', (e: Event) => showJobDetails((e.target as HTMLElement).dataset.jobId));
+            button.addEventListener('click', (e: Event) => showJobDetails((e.target as HTMLElement).dataset.jobId ?? ''));
         });
         document.querySelectorAll('.apply-job-btn').forEach(button => {
-            button.addEventListener('click', (e: Event) => openApplyModal((e.target as HTMLElement).dataset.jobId));
+            button.addEventListener('click', (e: Event) => openApplyModal((e.target as HTMLElement).dataset.jobId ?? ''));
         });
     }
 
@@ -1278,12 +1372,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const locFilter = filterLocation?.value ?? '';
         const typeFilter = filterType?.value ?? '';
 
-        const filteredJobs = appState.jobs.filter(job => {
-            return (deptFilter === '' || job.department === deptFilter) &&
-                   (locFilter === '' || job.location === locFilter) &&
-                   (typeFilter === '' || job.type === typeFilter);
-        });
-        renderJobs(filteredJobs);
+        // Show loading spinner for 400ms for better UX
+        if (jobListingsContainer) {
+            jobListingsContainer.innerHTML = `<div class="no-jobs-message" id="jobs-loading-message">
+                <svg width="32" height="32" viewBox="0 0 50 50" style="vertical-align:middle;"><circle cx="25" cy="25" r="20" fill="none" stroke="#3498db" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/></circle></svg>
+                <span style="margin-right:10px;">جاري تحميل الوظائف...</span>
+            </div>`;
+        }
+
+        setTimeout(() => {
+            const filteredJobs = appState.jobs.filter(job => {
+                return (deptFilter === '' || job.department === deptFilter) &&
+                    (locFilter === '' || job.location === locFilter) &&
+                    (typeFilter === '' || job.type === typeFilter);
+            });
+            renderJobs(filteredJobs);
+        }, 400);
     }
     
     if (filterDepartment) filterDepartment.addEventListener('change', filterAndRenderJobs);
@@ -1325,42 +1429,52 @@ document.addEventListener('DOMContentLoaded', () => {
     function openApplyModal(jobId: string | number) {
         if (!appState.currentUser) {
             alert('الرجاء تسجيل الدخول أولاً للتقديم على الوظيفة.');
-            openModal(loginModal);
+            openModal(document.getElementById('login-modal'));
             return;
         }
-        const job = appState.jobs.find(j => j.id == jobId);
+        const job = appState.jobs.find((j) => j.id == jobId);
         if (!job) return;
 
-        (document.getElementById('apply-job-id') as HTMLInputElement).value = String(jobId);
-        (document.getElementById('applying-for-job-title') as HTMLElement).textContent = `التقديم لوظيفة: ${job.title}`;
-        // Pre-fill form if user is logged in
-        (document.getElementById('apply-name') as HTMLInputElement).value = appState.currentUser.name;
-        (document.getElementById('apply-email') as HTMLInputElement).value = appState.currentUser.email;
-        applyForm?.reset();
-        openModal(applyModal);
+        const applyJobIdInput = document.getElementById('apply-job-id') as HTMLInputElement | null;
+        const applyingForJobTitle = document.getElementById('applying-for-job-title') as HTMLElement | null;
+
+        if (applyJobIdInput) applyJobIdInput.value = String(jobId);
+        if (applyingForJobTitle) applyingForJobTitle.textContent = `التقديم لوظيفة: ${job.title}`;
+
+        const applyNameInput = document.getElementById('apply-name') as HTMLInputElement | null;
+        const applyEmailInput = document.getElementById('apply-email') as HTMLInputElement | null;
+
+        if (applyNameInput) applyNameInput.value = appState.currentUser.name;
+        if (applyEmailInput) applyEmailInput.value = appState.currentUser.email;
+
+        openModal(document.getElementById('apply-modal'));
     }
 
     if(applyForm) {
         applyForm.addEventListener('submit', (e: Event) => {
             e.preventDefault();
-            const jobId = (document.getElementById('apply-job-id') as HTMLInputElement).value;
-            const name = (document.getElementById('apply-name') as HTMLInputElement).value;
-            const email = (document.getElementById('apply-email') as HTMLInputElement).value;
-            const phone = (document.getElementById('apply-phone') as HTMLInputElement).value;
-            const cvInput = document.getElementById('apply-cv') as HTMLInputElement;
-            const cvFile = cvInput?.files?.[0];
-            const coverLetter = (document.getElementById('apply-cover-letter') as HTMLTextAreaElement).value;
+            const jobId = (document.getElementById('apply-job-id') as HTMLInputElement)?.value;
+            const name = (document.getElementById('apply-name') as HTMLInputElement)?.value;
+            const email = (document.getElementById('apply-email') as HTMLInputElement)?.value;
+            const phone = (document.getElementById('apply-phone') as HTMLInputElement)?.value;
+            const cvInput = document.getElementById('apply-cv') as HTMLInputElement | null;
+            const cvFile = cvInput?.files?.[0] || null;
+            const coverLetter = (document.getElementById('apply-cover-letter') as HTMLTextAreaElement)?.value || '';
 
-            if (cvFile && cvFile.size > 5 * 1024 * 1024) { // 5MB limit
-                alert('حجم ملف السيرة الذاتية يجب أن يكون أقل من 5 ميجابايت.');
-                return;
-            }
-            if (cvFile && !['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(cvFile.type)) {
-                alert('الرجاء تحميل ملف سيرة ذاتية بصيغة PDF, DOC, أو DOCX.');
+            if (!jobId || !name || !email || !phone) {
+                alert('يرجى ملء جميع الحقول المطلوبة.');
                 return;
             }
 
-            appState.applications.push({ jobId, name, email, phone, cv: cvFile ? cvFile.name : null, coverLetter, type: 'specific' });
+            appState.applications.push({
+                jobId,
+                name,
+                email,
+                phone,
+                cv: cvFile ? cvFile.name : null,
+                coverLetter,
+                type: 'specific',
+            });
             saveState();
             alert('تم إرسال طلبك بنجاح!');
             closeModal(applyModal);
@@ -1471,52 +1585,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Simulate API call to Gemini (or any other AI)
         // This is a placeholder. You'd use a real API call here.
-        if (appState.geminiApiKey === 'YOUR_GEMINI_API_KEY_PLACEHOLDER' || !appState.geminiApiKey) {
+        if (!appState.geminiApiKey || !appState.geminiApiUrl) {
             setTimeout(() => {
                 removeLoadingIndicator();
-                addChatMessage('bot', 'عذراً، خدمة الدردشة الذكية غير متاحة حالياً. الرجاء التأكد من إعداد مفتاح API.');
+                addChatMessage('bot', 'عذراً، خدمة الدردشة الذكية غير متاحة حالياً. الرجاء التأكد من إعداد مفتاح API والرابط.');
             }, 1500);
             return;
         }
 
         try {
-            // IMPORTANT: In a real app, this API call should be made from a backend server
-            // to protect your API key. Exposing it client-side is a security risk.
-            // This is a simplified example for demonstration purposes ONLY.
-            // The Gemini API structure might differ. This is a generic fetch example.
-            /*
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${appState.geminiApiKey}`, {
+            // IMPORTANT: In production, call the API from a backend to protect your key.
+            // Comprehensive prompt for Gemini support assistant
+            const systemPrompt = `أنت مساعد دعم فني ذكي تابع لشركة "ميس للمنتجات الطبية". مهمتك الرد باحترافية وباللغة العربية الفصحى على استفسارات الزوار حول الوظائف، ثقافة العمل، التقديم، أو أي خدمات متعلقة بالشركة. كن ودوداً، مختصراً، وقدم معلومات دقيقة وحديثة. إذا كان السؤال خارج نطاق الشركة، اعتذر بلطف ووجه المستخدم للموارد المناسبة.`;
+
+            const response = await fetch(`${appState.geminiApiUrl}?key=${appState.geminiApiKey}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    contents: [{ parts: [{ text: messageText }] }]
+                    contents: [
+                        { parts: [{ text: systemPrompt }] },
+                        { parts: [{ text: messageText }] }
+                    ]
                 })
             });
+            let errorText = '';
             if (!response.ok) {
-                throw new Error(`API Error: ${response.statusText}`);
+                errorText = await response.text();
+                console.error('API Error:', response.status, response.statusText, errorText);
+                throw new Error(`API Error: ${response.statusText} - ${errorText}`);
             }
             const data = await response.json();
-            const botResponse = data.candidates[0].content.parts[0].text;
+            const botResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'تم استلام رسالتك.';
             removeLoadingIndicator();
             addChatMessage('bot', botResponse);
-            */
-
-            // Mock response since direct API call is complex and unsafe here
-            setTimeout(() => {
-                removeLoadingIndicator();
-                let botResponseText = "شكراً لرسالتك. كيف يمكنني مساعدتك بخصوص فرص العمل أو ثقافتنا؟";
-                if (messageText.toLowerCase().includes("وظائف") || messageText.toLowerCase().includes("عمل")) {
-                    botResponseText = "يمكنك تصفح جميع وظائفنا المتاحة في قسم 'الوظائف' أعلاه. هل هناك قسم معين أو موقع تهتم به؟";
-                } else if (messageText.toLowerCase().includes("ثقافة")) {
-                    botResponseText = "نحن نركز على الرعاية، الابتكار، التعاون، والتميز. يمكنك معرفة المزيد في قسم 'ثقافة العمل'.";
-                }
-                addChatMessage('bot', botResponseText);
-            }, 1500 + Math.random() * 1000);
 
         } catch (error) {
             console.error('Chat API error:', error);
             removeLoadingIndicator();
-            addChatMessage('bot', 'عذراً، حدث خطأ أثناء محاولة معالجة طلبك.');
+            addChatMessage('bot', 'عذراً، حدث خطأ أثناء محاولة معالجة طلبك. راجع وحدة التحكم (Console) لمزيد من التفاصيل.');
         }
     }
 
@@ -1572,7 +1678,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     voiceInputBtn.textContent = '...';
                     voiceInputBtn.disabled = true;
                 } catch (e) {
-                    console.error("Speech recognition could not start: ", e);
+                    console.error('Speech recognition could not start: ', e);
                     addChatMessage('bot', 'لم يتمكن التعرف على الصوت من البدء. قد يكون الميكروفون مستخدماً أو غير متوفر.');
                     voiceInputBtn.textContent = '🎤';
                     voiceInputBtn.disabled = false;
