@@ -315,80 +315,113 @@ const geminiApiUrl = import.meta.env.PUBLIC_GEMINI_API_URL;
         }
 
         /* Jobs Section */
-        #jobs {
+        #hiring-journey-3d {
             padding: 4rem 0;
+            background: linear-gradient(120deg, #f8f9fa 80%, #e3eafc 100%);
         }
-        #jobs h2 {
+        #hiring-journey-3d h2 {
             text-align: center;
+            margin-bottom: var(--spacing-md);
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+        #hiring-journey-3d .subheading {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-muted);
             margin-bottom: var(--spacing-xl);
         }
-        .job-filters {
+        .journey-3d-track {
             display: flex;
-            gap: var(--spacing-md);
+            justify-content: center;
+            align-items: flex-end;
+            gap: 2.5rem;
+            position: relative;
             margin-bottom: var(--spacing-xl);
             flex-wrap: wrap;
         }
-        .job-filters .form-control {
-            flex: 1;
-            min-width: 150px; /* Ensure filters don't get too small */
+        .cube-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
         }
-        .job-listings {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--spacing-lg);
+        .cube-label {
+            margin-top: 1.2rem;
+            text-align: center;
+            max-width: 160px;
         }
-        .job-card {
-            background: linear-gradient(120deg, #fff 80%, #f0f7fa 100%);
-            padding: var(--spacing-lg);
-            border: 1.5px solid var(--primary-color);
-            border-radius: var(--border-radius);
-            box-shadow: 0 2px 16px rgba(52,152,219,0.07);
-            transition: box-shadow var(--transition-speed) cubic-bezier(.4,2,.6,1), transform var(--transition-speed);
-            position: relative;
-            overflow: hidden;
+        .cube-label h3 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
         }
-        .job-card::before {
-            content: "";
-            position: absolute;
-            top: -40px;
-            left: -40px;
+        .cube-label p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .cube-connector {
+            width: 60px;
+            height: 6px;
+            background: linear-gradient(90deg, #3498db 60%, #2ecc71 100%);
+            border-radius: 3px;
+            margin-bottom: 60px;
+            box-shadow: 0 2px 8px rgba(52,152,219,0.10);
+            z-index: 1;
+        }
+        .cube {
             width: 80px;
             height: 80px;
-            background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
-            opacity: 0.08;
-            z-index: 0;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateY(-30deg) rotateX(20deg);
+            transition: transform 0.5s cubic-bezier(.4,2,.6,1);
+            cursor: pointer;
+            margin-bottom: 0.5rem;
         }
-        .job-card:hover {
-            box-shadow: 0 8px 32px rgba(52,152,219,0.18);
-            transform: translateY(-4px) scale(1.02);
-            border-color: var(--accent-color);
+        .cube:hover {
+            transform: rotateY(20deg) rotateX(-10deg) scale(1.08);
+            box-shadow: 0 12px 32px rgba(52,152,219,0.18);
         }
-        .job-card h3 {
-            font-size: 1.3rem;
-            color: var(--primary-color);
-            margin-bottom: var(--spacing-sm);
+        .cube .face {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border: 2.5px solid #3498db;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(52,152,219,0.10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            font-weight: bold;
+            color: #3498db;
+            transition: background 0.3s, color 0.3s;
         }
-        .job-card p {
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-muted);
+        .cube .face.front  { transform: rotateY(0deg) translateZ(40px); background: #3498db; color: #fff; }
+        .cube .face.back   { transform: rotateY(180deg) translateZ(40px); background: #2ecc71; color: #fff; font-size:1.1rem;}
+        .cube .face.right  { transform: rotateY(90deg) translateZ(40px); background: #e74c3c; color: #fff; font-size:1.1rem;}
+        .cube .face.left   { transform: rotateY(-90deg) translateZ(40px); background: #764ba2; color: #fff; font-size:1.1rem;}
+        .cube .face.top    { transform: rotateX(90deg) translateZ(40px); background: #f39c12; color: #fff; font-size:1.1rem;}
+        .cube .face.bottom { transform: rotateX(-90deg) translateZ(40px); background: #fff; }
+        .cube .face span { font-size: 1rem; }
+        @media (max-width: 1100px) {
+            .journey-3d-track { gap: 1.2rem; }
+            .cube-connector { width: 36px; }
         }
-        .job-card .details {
-            font-size: 0.9rem;
-            margin-bottom: var(--spacing-md);
+        @media (max-width: 700px) {
+            .journey-3d-track { flex-direction: column; align-items: center; gap: 1.5rem; }
+            .cube-connector { width: 6px; height: 60px; margin-bottom: 0; margin-top: 0; }
         }
-        .job-card .actions .btn {
-            margin-left: var(--spacing-sm); /* RTL */
-        }
-        .no-jobs-message {
-            text-align: center;
-            padding: var(--spacing-xl);
-            background-color: var(--light-bg);
-            border-radius: var(--border-radius);
-            color: var(--text-muted);
-        }
-        .general-cv-submission {
+        .text-center {
             text-align: center;
             margin-top: var(--spacing-xl);
+        }
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
         }
 
         /* Contact Section */
@@ -685,35 +718,73 @@ const geminiApiUrl = import.meta.env.PUBLIC_GEMINI_API_URL;
             </div>
         </section>
 
-        <section id="jobs">
+        <section id="hiring-journey-3d">
             <div class="container">
-                <h2>فرص العمل المتاحة</h2>
-                <div class="job-filters">
-                    <select id="filter-department" class="form-control" aria-label="تصفية حسب القسم">
-                        <option value="">كل الأقسام</option>
-                        {/* Options will be populated by JS */}
-                    </select>
-                    <select id="filter-location" class="form-control" aria-label="تصفية حسب الموقع">
-                        <option value="">كل المواقع</option>
-                        {/* Options will be populated by JS */}
-                    </select>
-                    <select id="filter-type" class="form-control" aria-label="تصفية حسب نوع الدوام">
-                        <option value="">كل أنواع الدوام</option>
-                        <option value="دوام كامل">دوام كامل</option>
-                        <option value="دوام جزئي">دوام جزئي</option>
-                        <option value="عن بعد">عن بعد</option>
-                    </select>
-                </div>
-                <div id="job-listings" class="job-listings">
-                    {/* Job cards will be populated by JS */}
-                    <div class="no-jobs-message" id="jobs-loading-message">
-                        <svg width="32" height="32" viewBox="0 0 50 50" style="vertical-align:middle;"><circle cx="25" cy="25" r="20" fill="none" stroke="#3498db" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/></circle></svg>
-                        <span style="margin-right:10px;">جاري تحميل الوظائف...</span>
+                <h2>رحلة التوظيف ثلاثية الأبعاد في ميس</h2>
+                <p class="subheading">استكشف خطوات التوظيف وكأنك تعيشها فعلياً – تصميم ثلاثي الأبعاد مبتكر</p>
+                <div class="journey-3d-track">
+                    <div class="cube-step" style="--step:1;">
+                        <div class="cube">
+                            <div class="face front">1</div>
+                            <div class="face back">رفع السيرة</div>
+                            <div class="face right">CV</div>
+                            <div class="face left">سيرة</div>
+                            <div class="face top"><span>ابدأ</span></div>
+                            <div class="face bottom"></div>
+                        </div>
+                        <div class="cube-label">
+                            <h3>رفع السيرة الذاتية</h3>
+                            <p>ارفع سيرتك الذاتية بسهولة</p>
+                        </div>
+                    </div>
+                    <div class="cube-connector"></div>
+                    <div class="cube-step" style="--step:2;">
+                        <div class="cube">
+                            <div class="face front">2</div>
+                            <div class="face back">معلومات</div>
+                            <div class="face right">Form</div>
+                            <div class="face left">نموذج</div>
+                            <div class="face top"><span>بيانات</span></div>
+                            <div class="face bottom"></div>
+                        </div>
+                        <div class="cube-label">
+                            <h3>تعبئة البيانات</h3>
+                            <p>أكمل معلوماتك الأساسية</p>
+                        </div>
+                    </div>
+                    <div class="cube-connector"></div>
+                    <div class="cube-step" style="--step:3;">
+                        <div class="cube">
+                            <div class="face front">3</div>
+                            <div class="face back">مقابلة</div>
+                            <div class="face right">Voice</div>
+                            <div class="face left">Text</div>
+                            <div class="face top"><span>اختيارك</span></div>
+                            <div class="face bottom"></div>
+                        </div>
+                        <div class="cube-label">
+                            <h3>مقابلة مبدئية</h3>
+                            <p>صوتية أو كتابية حسب تفضيلك</p>
+                        </div>
+                    </div>
+                    <div class="cube-connector"></div>
+                    <div class="cube-step" style="--step:4;">
+                        <div class="cube">
+                            <div class="face front">4</div>
+                            <div class="face back">AI</div>
+                            <div class="face right">تقرير</div>
+                            <div class="face left">نتيجة</div>
+                            <div class="face top"><span>تحليل</span></div>
+                            <div class="face bottom"></div>
+                        </div>
+                        <div class="cube-label">
+                            <h3>تقرير الذكاء الاصطناعي</h3>
+                            <p>تحليل شامل وتحديد موعد ونسبة الموائمة</p>
+                        </div>
                     </div>
                 </div>
-                <div class="general-cv-submission">
-                    <p>لم تجد الوظيفة المناسبة؟</p>
-                    <button class="btn btn-secondary" id="general-cv-btn" aria-label="تقديم سيرة ذاتية عامة">قدم سيرتك الذاتية بشكل عام</button>
+                <div class="text-center">
+                    <button class="btn btn-primary btn-lg" id="start-journey-btn">ابدأ رحلتك الآن</button>
                 </div>
             </div>
         </section>
